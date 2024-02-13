@@ -1,0 +1,38 @@
+# File: .github/workflows/repo-sync.yml
+name:
+  Sync this repo with remote repo into feature branch
+  
+on:
+  #schedule:
+  # - cron:  "0 0 * * *"
+  workflow_dispatch:
+    inputs:
+       source_owner_repo:
+         description: 'Source Repository Owner and Repo (e.g. source_owner/source_repo)'
+       source_owner_token:
+         description: 'Source Repository Owner Token'  
+       source_branch:
+         description: 'Source Branch'
+         default: 'main'
+
+jobs:  
+  repo-sync:
+    runs-on: ubuntu-latest
+    env:
+      DEFAULT_DEST_BRANCH: "main"
+      # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+    - name: repo-sync
+      uses: repo-sync/github-sync@v2
+      with:
+        source_repo: "https://${{ github.event.inputs.source_owner_token }}@github.com/${{ github.event.inputs.source_owner_repo }}"
+        source_branch: "${{ github.event.inputs.source_branch }}"
+        destination_branch: ${{ env.DEFAULT_DEST_BRANCH }}
+        sync_tags: "true"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Change default branch
+    #  run: |
+    #    gh repo edit --default-branch ${{ env.DEFAULT_DEST_BRANCH }}

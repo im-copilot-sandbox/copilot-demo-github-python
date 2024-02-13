@@ -1,0 +1,23 @@
+name: Create pull request when the remote_main branch is updated
+on:
+  push:
+    branches:
+      - remote_main
+  workflow_dispatch:
+      
+jobs:
+  remoteMainPromotion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: remote_main
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}          
+          base: main
+          title: 'Merge changes from remote_main'
+          body: 'This PR merges changes from remote_main into main.'
+          draft: false
