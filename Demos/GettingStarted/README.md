@@ -21,7 +21,7 @@ Let's take one step at a time to solve this problem.
 
 First, let's create a new file in Visual Studio Code. It will be also nice to put inside an uniquely named folder.
 
-![Create a new file](./images/1_NewFile.jpg)
+<img src="./images/1_NewFile.jpg" height=300/>
 
 I named this file `locker-distribution.py`, but you can call it whatever you want. From that new file, you can start typing a comment starting with a hash sign. Copilot can suggest based on comments, function  name, previous context, etc.
 
